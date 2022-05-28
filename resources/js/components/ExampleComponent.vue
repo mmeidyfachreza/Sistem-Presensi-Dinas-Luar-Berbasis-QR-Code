@@ -7,6 +7,7 @@
 
                     <div class="card-body">
                         I'm an example component.
+                        <qrcode-stream @decode="onDecode"></qrcode-stream>
                     </div>
                 </div>
             </div>
@@ -15,9 +16,21 @@
 </template>
 
 <script>
+import { QrcodeStream, QrcodeDropZone, QrcodeCapture } from 'vue-qrcode-reader';
+
     export default {
+        components: {
+            QrcodeStream,
+            QrcodeDropZone,
+            QrcodeCapture
+        },
         mounted() {
             console.log('Component mounted.')
+        },
+        methods: {
+            onDecode (decodedString) {
+                console.log(decodedString)
+            }
         }
     }
 </script>
