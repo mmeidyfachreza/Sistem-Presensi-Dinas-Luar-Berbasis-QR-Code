@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    @if (Auth::check())
+    <meta name="user_id" content="{{ Auth::user()->id }}" />
+    @endif
     <title>{{ config('app.name', 'mumefa-project') }}</title>
 
     <!-- Google Font: Source Sans Pro -->
@@ -78,6 +81,7 @@
     <!-- AdminLTE for demo purposes -->
     <script src="{{asset("template/js/demo.js")}}"></script>
     {{-- <script src="{{asset("template/js/popper.js")}}"></script> --}}
+    <script>window.Laravel = {csrfToken: '{{ csrf_token() }}'}</script>
     @yield('js')
 </body>
 
