@@ -1,0 +1,45 @@
+<template>
+    <div class="row justify-content-center">
+        <PresenceInfo/>
+        <QrcodeScanner/>
+    </div>
+</template>
+
+<script>
+import QrcodeScanner from './QrcodeScanner';
+import PresenceInfo from './PresenceInfo.vue';
+import { usePresenceStore } from '../store/presenceStore'
+import { mapStores } from 'pinia';
+
+    export default {
+        computed: {
+        // note we are not passing an array, just one store after the other
+        // each store will be accessible as its id + 'Store'
+        ...mapStores(usePresenceStore)
+        },
+        data()
+        {
+            return{
+                user_id: this.$userId,
+            }
+        },
+        components: {
+            PresenceInfo,
+            QrcodeScanner,
+        },
+        created(){
+            this.presenceStore.userId = this.user_id
+            axios
+            .get('/api/presensi/'+this.user_id+'')
+            .then(response => {
+                console.log(response.data)
+                this.presenceStore.startTime = response.data.startTime
+                this.presenceStore.endTime = response.data.endTime
+                this.presenceStore.show = response.data.show
+                // this.durasi = response.data.data.durasi_kerja
+                // console.log(this.jam_hadir);
+                //this.linkLoc ='https://www.google.com/maps/place/'+response.data.latitude+','+response.data.longitude
+            });
+        }
+    }
+</script>
