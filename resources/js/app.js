@@ -42,8 +42,3 @@ const app = new Vue({
     el: '#app',
     pinia,
 });
-
-const qrcode = new Vue({
-    el: '#app',
-    pinia,
-});
