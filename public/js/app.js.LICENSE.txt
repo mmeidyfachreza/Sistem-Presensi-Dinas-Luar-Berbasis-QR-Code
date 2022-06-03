@@ -5,10 +5,18 @@
   */
 
 /*!
+  * pinia v2.0.14
+  * (c) 2022 Eduardo San Martin Morote
+  * @license MIT
+  */
+
+/*!
  * Vue.js v2.6.14
  * (c) 2014-2021 Evan You
  * Released under the MIT License.
  */
+
+/*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */
 
 /**
  * @license
