@@ -20,14 +20,17 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return redirect()->route('dashboard');
 });
-Route::get('tes', function () {
-    return view('presensi.qrcode_scanner');
-});
-Route::get('pusher', function () {
-    return view('pusher');
+Route::get('qrcode', function () {
+    return view('guest.qrcode');
 });
 Auth::routes();
+Route::get('tes', function () {
+    return view('employee.index');
+});
 
+Route::get('check-auth', function () {
+    return auth()->check();
+});
 Route::middleware(['auth'])->group(function () {
     Route::get('dashboard', [DashboardController::class,'index'])->name('dashboard');
     Route::resource('karyawan', EmployeeController::class,[
