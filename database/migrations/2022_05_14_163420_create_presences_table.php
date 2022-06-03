@@ -19,9 +19,10 @@ return new class extends Migration
             $table->foreignId('field_work_activity_id')->constrained();
             $table->date('date');
             $table->time('start_time');
-            $table->time('end_time');
+            $table->time('end_time')->nullable();
             $table->string('start_location');
-            $table->string('end_location');
+            $table->string('end_location')->nullable();
+            $table->string('work_duration')->nullable();
             $table->timestamps();
         });
     }
