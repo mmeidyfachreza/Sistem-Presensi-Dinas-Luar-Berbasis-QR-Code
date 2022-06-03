@@ -32,7 +32,6 @@ class DatabaseSeeder extends Seeder
         $user = User::create([
             'username' => 'admin',
             'password' => '$2y$10$sntWCL1bS5jqPFmVVZ.j2uZIXdrMs1TBPzr99XV3Rrk5aixpdbF5.', //enpass skripsi
-            'employee_id' => 1,
         ]);
         $user->assignRole('Super Admin');
 
