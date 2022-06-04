@@ -44,6 +44,7 @@ class PresenceController extends Controller
                 'start_location' => $request->lat.', '.$request->long,
             ]);
             return response()->json([
+                'status' => 'hadir',
                 'show' => false,
                 'time'=>$presence->start_time
             ]);
