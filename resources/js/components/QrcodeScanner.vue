@@ -65,6 +65,7 @@ import { mapStores } from 'pinia';
             }
             },
             async onDecode (decodedString) {
+                console.log(decodedString)
                 this.$getLocation()
                 .then(coordinates => {
                     axios.post('/api/presensi/verif-qrcode',{
@@ -86,7 +87,6 @@ import { mapStores } from 'pinia';
                             icon: 'error',
                             confirmButtonText: 'Ok'
                             });
-                            console.log(decodedString);
                             console.log(error.response.data); // => the response payload
                         }
                     });
