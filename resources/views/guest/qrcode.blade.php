@@ -3,7 +3,7 @@
 
 @endsection
 @section('content')
-<x-content-header name="Beranda" />
+<x-content-header name="QR Code Presensi" />
 <section class="content">
     <div class="container-fluid">
         <div class="visible-print text-center">
