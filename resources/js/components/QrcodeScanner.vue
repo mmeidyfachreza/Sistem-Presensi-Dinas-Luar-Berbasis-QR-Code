@@ -87,7 +87,7 @@ import { mapStores } from 'pinia';
                             icon: 'error',
                             confirmButtonText: 'Ok'
                             });
-                            console.log(error.response.data); // => the response payload
+                            console.log(error.response.data.message); // => the response payload
                         }
                     });
                 });
