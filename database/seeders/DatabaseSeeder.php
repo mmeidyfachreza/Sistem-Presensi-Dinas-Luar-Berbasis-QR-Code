@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Employee;
+use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -29,6 +30,7 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class,
             RoleSeeder::class
         ]);
+        Setting::create(['tolerance_distance'=>10]);
         $user = User::create([
             'username' => 'admin',
             'password' => '$2y$10$sntWCL1bS5jqPFmVVZ.j2uZIXdrMs1TBPzr99XV3Rrk5aixpdbF5.', //enpass skripsi

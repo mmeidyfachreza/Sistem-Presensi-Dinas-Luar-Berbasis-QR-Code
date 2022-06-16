@@ -83,7 +83,7 @@ import { mapStores } from 'pinia';
                         if( error.response ){
                             this.$swal({
                             title: 'Error!',
-                            text: 'Presensi tidak bisa dilakukan tanpa akses lokasi, silahkan izinkan akses lokasi',
+                            text: 'Error,'+error.response.data,
                             icon: 'error',
                             confirmButtonText: 'Ok'
                             });
