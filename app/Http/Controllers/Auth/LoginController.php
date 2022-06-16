@@ -45,15 +45,17 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
+
+
         $this->validate($request, [
             'username' => 'required|string', //VALIDASI KOLOM USERNAME
             //TAPI KOLOM INI BISA BERISI EMAIL ATAU USERNAME
             'password' => 'required|string|min:6',
             // 'captcha' => 'required|captcha'
         ]);
-
+        $remember = ($request->has('remember')) ? true : false;
         //LAKUKAN LOGIN
-        if (Auth::attempt(['username' => $request->username, 'password' => $request->password],true)) {
+        if (Auth::attempt(['username' => $request->username, 'password' => $request->password],$remember)) {
             //JIKA BERHASIL, MAKA REDIRECT KE HALAMAN Dashboard
             return redirect()->route('dashboard');
         }

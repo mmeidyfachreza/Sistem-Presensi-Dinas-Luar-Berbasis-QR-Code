@@ -6,19 +6,37 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\PresenceResource;
 use App\Models\Presence;
 use App\Models\User;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use App\Events\MessageSent;
+use App\Models\Qrcode;
+use Illuminate\Support\Facades\Auth;
 
 class PresenceController extends Controller
 {
     public function show($employeeId)
     {
-        return response()->json(new PresenceResource(Presence::getPresence($employeeId)));
+        if(Presence::havePresence($employeeId)){
+            return response()->json(new PresenceResource(Presence::getPresence($employeeId)));
+        }else{
+            return response()->json([
+                'startTime' => 'belum tercatat',
+                'endTime' => 'belum tercatat',
+            ]);
+        }
+
     }
 
     public function store(Request $request)
     {
-        //$employeeId = User::find($request->userId);
+        $coordinate = Qrcode::getCoordinate($request->decodedString);
+        if (!$this->verificationDistance($request->lat,$request->long, $coordinate[0], $coordinate[1])) {
+            return response()->json(['message'=>'anda terlalu jauh dari lokasi presensi yang telah ditentukan'.$request->lat.', '.$request->long],400);
+        }
+        if (Qrcode::IsValidQrcode($request->decodedString,$request->userId)) {
+            return response()->json(['message'=>'QR Code tidak valid'],422);
+        }
         if (Presence::havePresence($request->userId)) {
             $presence = Presence::getPresence($request->userId);
             $endTime = Carbon::now()->format('H:i:s');
@@ -50,5 +68,27 @@ class PresenceController extends Controller
             ]);
         }
         // return response()->json(['presence'=>"ok"]);
+    }
+
+    function verificationDistance(
+        $latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo, $earthRadius = 6371000)
+    {
+    //haversine formula
+    // convert from degrees to radians
+    $latFrom = deg2rad($latitudeFrom);
+    $lonFrom = deg2rad($longitudeFrom);
+    $latTo = deg2rad($latitudeTo);
+    $lonTo = deg2rad($longitudeTo);
+
+    $latDelta = $latTo - $latFrom;
+    $lonDelta = $lonTo - $lonFrom;
+
+    $angle = 2 * asin(sqrt(pow(sin($latDelta / 2), 2) +
+        cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)));
+    $result = $angle * $earthRadius;
+    if ($result >= Setting::first()->tolerance_distance ) {
+        return false;
+    }
+    return true;
     }
 }

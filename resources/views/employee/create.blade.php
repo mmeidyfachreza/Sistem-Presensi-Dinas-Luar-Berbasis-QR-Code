@@ -3,12 +3,10 @@
 
 @endsection
 @section('content')
-<x-content-header name="Beranda" />
-<section class="content">
+<x-content-header name="Presensi {{$fieldWorkActivity->project_name}}" />
+<section class="content" id="app">
     <div class="container-fluid">
-        <div class="visible-print text-center">
-            {!! QrCode::size(300)->generate($codewords); !!}
-        </div>
+        <Presensi-Component><Presensi-Component/>
     </div>
 </section>
 

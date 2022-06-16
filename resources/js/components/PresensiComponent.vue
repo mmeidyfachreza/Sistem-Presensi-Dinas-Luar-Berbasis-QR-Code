@@ -29,17 +29,18 @@ import { mapStores } from 'pinia';
         },
         created(){
             this.presenceStore.userId = this.user_id
+            this.presenceStore.pause()
+            this.presenceStore.show = false
             axios
             .get('/api/presensi/'+this.user_id+'')
             .then(response => {
-                console.log(response.data)
                 this.presenceStore.startTime = response.data.startTime
                 this.presenceStore.endTime = response.data.endTime
-                this.presenceStore.show = response.data.show
                 // this.durasi = response.data.data.durasi_kerja
                 // console.log(this.jam_hadir);
                 //this.linkLoc ='https://www.google.com/maps/place/'+response.data.latitude+','+response.data.longitude
             });
-        }
+
+        },
     }
 </script>

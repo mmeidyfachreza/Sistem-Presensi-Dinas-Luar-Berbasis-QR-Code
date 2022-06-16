@@ -1,8 +1,11 @@
 <?php
 
+use App\Events\MessageSent;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\FieldWorkActivityController;
+use App\Http\Controllers\GuestController;
+use App\Http\Controllers\PresenceController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -20,18 +23,26 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return redirect()->route('dashboard');
 });
-Route::get('qrcode', function () {
-    return view('guest.qrcode');
+Route::get('qrcode/{slugString}', [GuestController::class,'show']);
+
+Route::get('bc', function () {
+    // broadcast(new MessageSent('holla'))->toOthers();
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    $randomString = '';
+
+    for ($i = 0; $i < 8; $i++) {
+        $index = rand(0, strlen($characters) - 1);
+        $randomString .= $characters[$index];
+    }
+    echo $randomString;
 });
 Auth::routes();
-Route::get('tes', function () {
-    return view('employee.index');
-});
 
 Route::get('check-auth', function () {
     return auth()->check();
 });
-Route::middleware(['auth'])->group(function () {
+
+Route::group(['middleware' => ['auth'],'prefix'=>'admin'], function () {
     Route::get('dashboard', [DashboardController::class,'index'])->name('dashboard');
     Route::resource('karyawan', EmployeeController::class,[
         'names' => [
@@ -56,4 +67,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('kegiatan-kerja-lapangan/{fieldWorkActivity}/edit', [FieldWorkActivityController::class,'edit'])->name('field_work_activity.edit');
     Route::delete('kegiatan-kerja-lapangan/{fieldWorkActivity}', [FieldWorkActivityController::class,'destroy'])->name('field_work_activity.destroy');
     Route::get('kegiatan-kerja-lapangan/filter', [FieldWorkActivityController::class,'filter'])->name('field_work_activity.filter');
+
+
+
+    // Route::get('tes', function () {
+    //     return view('employee.index');
+    // });
+});
+
+Route::group(['middleware' => ['auth'],'prefix'=>'karyawan'], function () {
+    Route::get('presensi', [FieldWorkActivityController::class,'indexEmployee'])->name('attendance.index');
+    Route::get('presensi/proses/{fieldWorkActivity}', [PresenceController::class,'create'])->name('attendance.create');
 });

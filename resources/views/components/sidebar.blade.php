@@ -24,6 +24,7 @@
                 data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
        with font-awesome or any other icon font library -->
+                @if (Auth::check())
                 <li class="nav-item">
                     <a href="{{route('dashboard')}}" class="nav-link active">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -32,6 +33,9 @@
                         </p>
                     </a>
                 </li>
+                @endif
+
+                @can('index fwa')
                 <li class="nav-item">
                     <a href="{{route('field_work_activity.index')}}" class="nav-link">
                         <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -41,6 +45,18 @@
                     </a>
 
                 </li>
+                @endcan
+                @can('index attendance')
+                <li class="nav-item">
+                    <a href="{{route('attendance.index')}}" class="nav-link">
+                        <i class="nav-icon fas fa-clipboard-check"></i>
+                        <p>
+                            Presensi
+                        </p>
+                    </a>
+
+                </li>
+                @endcan
                 @canany(['employee index','department index','position index'])
                 <li class="nav-item">
                     <a href="#" class="nav-link">
@@ -62,6 +78,7 @@
                     </ul>
                 </li>
                 @endcan
+                @if (Auth::check())
                 <li class="nav-item">
                     <a href="{{ route('logout') }}" class="nav-link" onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">
@@ -74,6 +91,8 @@
                         @csrf
                     </form>
                 </li>
+                @endif
+
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

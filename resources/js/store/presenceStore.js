@@ -5,12 +5,13 @@ import { defineStore } from 'pinia'
 export const usePresenceStore = defineStore('presence', {
     state: () => ({
         /** @type {string[]} */
-        rawItems: 1,
         startTime: 'belum tercatat',
         endTime: 'belum tercatat',
         result: '',
         userId: '',
         show: true,
+        camera: 'auto',
+        showScanConfirmation: false
     }),
     actions: {
     async fetchUsers() {
@@ -31,24 +32,27 @@ export const usePresenceStore = defineStore('presence', {
         this.userId = userId
     },
 
-    /**
-     * Remove item from the cart
-     * @param {string} name
-     */
-    removeItem(name) {
-        const i = this.rawItems.lastIndexOf(name)
-        if (i > -1) this.rawItems.splice(i, 1)
+    isPresence() {
+        return (this.startTime=='belum tercatat')? false : true
+    },
+    completePresence() {
+        return (this.startTime!='belum tercatat' && this.endTime!='belum tercatat')? true : false
+    },
+    activeScanner(){
+        this.show = true
+    },
+    unpause () {
+        this.camera = 'auto'
     },
 
-    async purchaseItems() {
-        const user = useUserStore()
-        if (!user.name) return
-
-        console.log('Purchasing', this.items)
-        const n = this.items.length
-        this.rawItems = []
-
-        return n
+    pause () {
+        this.camera = 'off'
     },
+
+    timeout (ms) {
+        return new Promise(resolve => {
+            window.setTimeout(resolve, ms)
+        })
+    }
     },
 })

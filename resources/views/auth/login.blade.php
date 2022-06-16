@@ -56,6 +56,17 @@
                                 </span>
                                 @enderror
                             </div>
+
+                            <div class="form-group mb-4">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+
+                                    <label class="form-check-label" for="remember">
+                                        {{ __('Ingat Saya') }}
+                                    </label>
+                                </div>
+                            </div>
+
                             {{-- <input name="login" id="login" class="btn btn-block login-btn" type="button" value="Login"> --}}
                             <button type="submit" class="btn btn-block login-btn">Login</button>
                         </form>

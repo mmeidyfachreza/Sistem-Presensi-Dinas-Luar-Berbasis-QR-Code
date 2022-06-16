@@ -23,11 +23,13 @@
                         </tr>
                     </tbody>
                 </table>
-                <!-- <div class="row">
-                    <a :href="linkV" v-if="!jam_hadir" class="col-lg-6 btn btn-info">Presensi Hadir</a>
-                    <a :href="linkV" v-if="!jam_pulang&&jam_hadir" class="col-lg-6 btn btn-success">Presensi Pulang {{jam_pulang}}</a>
-                    <p v-if="jam_pulang&&jam_hadir" class="px-4">Anda sudah melakukan presensi hari ini, selamat beristirahat</p>
-                </div> -->
+                <div class="row">
+                    <!-- <a :href="linkV" v-if="!jam_hadir" class="col-lg-6 btn btn-info">Presensi Hadir</a>
+                    <a :href="linkV" v-if="!jam_pulang&&jam_hadir" class="col-lg-6 btn btn-success">Presensi Pulang {{jam_pulang}}</a> -->
+                    <button v-if="this.presenceStore.isPresence()" :disabled="this.presenceStore.show" @click="activeScanner" class="col-lg-12 btn btn-info">Catat Pulang</button>
+                    <button v-if="!this.presenceStore.isPresence()" :disabled="this.presenceStore.show" @click="activeScanner" class="col-lg-12 btn btn-info">Catat Hadir</button>
+                    <p v-if="this.presenceStore.completePresence()" class="px-4">Anda sudah melakukan presensi hari ini, selamat beristirahat</p>
+                </div>
             </div>
         </div>
     </div>
@@ -44,9 +46,13 @@ export default {
     // each store will be accessible as its id + 'Store'
     ...mapStores(usePresenceStore)
     },
-    mounted(){
-        console.log(this.presenceStore.startTime)
-        console.log(this.presenceStore.endTime)
+    methods:{
+        activeScanner(event) {
+            this.presenceStore.activeScanner()
+            this.presenceStore.unpause()
+        }
+    },
+    created(){
     }
 }
 </script>

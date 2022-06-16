@@ -7,8 +7,8 @@
                     <transition name="fade">
                         <div v-if="lokasi">
                             <!-- <qrcode-stream @decode="onDecode" @init="onInit" /> -->
-                            <qrcode-stream :camera="camera" @decode="onDecode" @init="onInit">
-                            <div v-show="showScanConfirmation" class="scan-confirmation">
+                            <qrcode-stream :camera="this.presenceStore.camera" @decode="onDecode" @init="onInit">
+                            <div v-show="this.presenceStore.showScanConfirmation" class="scan-confirmation">
                                 <img :src="'/img/checkmark.svg'" alt="Checkmark" width="128px" />
                             </div>
                             </qrcode-stream>
@@ -52,8 +52,6 @@ import { mapStores } from 'pinia';
             show: true,
             lokasi: false,
             ada: false,
-            camera: 'auto',
-            showScanConfirmation: false
             }
         },
         methods: {
@@ -63,7 +61,7 @@ import { mapStores } from 'pinia';
             } catch (e) {
                 console.error(e)
             } finally {
-                this.showScanConfirmation = this.camera === "off"
+                this.presenceStore.showScanConfirmation = this.presenceStore.camera === "off"
             }
             },
             async onDecode (decodedString) {
@@ -75,38 +73,27 @@ import { mapStores } from 'pinia';
                         lat: coordinates.lat,
                         long: coordinates.lng
                     }).then(response => {
-                        // this.status = response.data.hasil
-                        // this.show = !response.data.hasil
-                        // this.loading = false
-                        // this.pesan = response.data.pesan
-                        console.log(response)
                         if(response.data.status=='hadir'){
                             this.presenceStore.startTime = response.data.time
                         }else{
                             this.presenceStore.endTime = response.data.time
-                            this.presenceStore.show = response.data.show
                         }
-                        // v.qr = response.data.data[0].qrcode;
+                    }).catch((error) => {
+                        if( error.response ){
+                            this.$swal({
+                            title: 'Error!',
+                            text: 'Presensi tidak bisa dilakukan tanpa akses lokasi, silahkan izinkan akses lokasi',
+                            icon: 'error',
+                            confirmButtonText: 'Ok'
+                            });
+                            console.log(error.response.data); // => the response payload
+                        }
                     });
                 });
-                this.pause()
-                await this.timeout(500)
-                this.unpause()
+                this.presenceStore.pause()
+                await this.presenceStore.timeout(500)
+                this.presenceStore.show = false
             },
-            unpause () {
-                this.camera = 'auto'
-            },
-
-            pause () {
-                this.camera = 'off'
-            },
-
-            timeout (ms) {
-                return new Promise(resolve => {
-                    window.setTimeout(resolve, ms)
-                })
-            }
-
         },
         mounted(){
             this.$getLocation()
@@ -115,7 +102,7 @@ import { mapStores } from 'pinia';
             }).catch(error => {
                 this.$swal({
                 title: 'Error!',
-                text: 'Presensi tidak bisa dilakukan tanpa akses lokasi',
+                text: 'Presensi tidak bisa dilakukan tanpa akses lokasi, silahkan izinkan akses lokasi',
                 icon: 'error',
                 confirmButtonText: 'Ok'
                 });

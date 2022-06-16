@@ -44,7 +44,7 @@ class FieldWorkActivityFactory extends Factory
     public function configure()
     {
         $employee = Employee::select("id");
-        $team = $this->faker->randomElements($array = $employee->get()->pluck("id")->toArray(), $count = $this->faker->numberBetween($min = 1, $max = 5));
+        $team = $this->faker->randomElements($array = $employee->get()->pluck("id")->toArray(), $count = $this->faker->numberBetween($min = 2, $max = 5));
         return $this->afterCreating(function (FieldWorkActivity $fieldWorkActivity) use ($team) {
             $fieldWorkActivity->employees()->attach($team);
         });

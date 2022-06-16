@@ -73,7 +73,7 @@
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label>Link Presensi</label>
-                            <p>{{$fieldWorkActivity->link}}</p>
+                            <p><a href="{{ config('app.url', 'http') }}/guest/{{$fieldWorkActivity->link}}">{{ config('app.url', 'http') }}/guest/{{$fieldWorkActivity->link}}</a></p>
                         </div>
                     </div>
                     <div class="col-lg-6">

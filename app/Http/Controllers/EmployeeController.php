@@ -14,6 +14,15 @@ use Spatie\Permission\Models\Role;
 
 class EmployeeController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(['permission:index employee'])->only(['index']);
+        $this->middleware(['permission:create employee'])->only(['create','store']);
+        $this->middleware(['permission:show employee'])->only(['show']);
+        $this->middleware(['permission:edit employee'])->only(['edit','update']);
+        $this->middleware(['permission:destroy employee'])->only(['destroy']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -22,7 +31,7 @@ class EmployeeController extends Controller
     public function index()
     {
         $employees = Employee::paginate();
-        return view('employee.index',compact('employees'));
+        return view('admin.employee.index',compact('employees'));
     }
 
     /**
@@ -96,7 +105,7 @@ class EmployeeController extends Controller
     public function edit(Employee $employee)
     {
         $roles = Role::select('id','name')->where('id','!=',1)->get();
-        return view('employee.edit',compact('employee','roles'));
+        return view('admin.employee.edit',compact('employee','roles'));
     }
 
     /**
@@ -181,8 +190,8 @@ class EmployeeController extends Controller
         return response()->json($parents);
     }
 
-    public function export()
-    {
-        return Excel::download(new EmployeeExport(), 'Format Import Data Siswa.xlsx');
-    }
+    // public function export()
+    // {
+    //     return Excel::download(new EmployeeExport(), 'Format Import Data Siswa.xlsx');
+    // }
 }

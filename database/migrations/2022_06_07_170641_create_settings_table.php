@@ -13,11 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('qrcodes', function (Blueprint $table) {
+        Schema::create('settings', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('field_work_activity_id')->constrained();
-            $table->string('codewords');
-            $table->boolean('active')->default(true);
+            $table->integer('tolerance_distance');
             $table->timestamps();
         });
     }
@@ -29,9 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('qrcodes', function(Blueprint $table){
-            $table->dropForeign(['field_work_activity_id']);
-        });
-        Schema::dropIfExists('qrcodes');
+        Schema::dropIfExists('settings');
     }
 };

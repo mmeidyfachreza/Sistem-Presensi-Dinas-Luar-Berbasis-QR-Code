@@ -52,6 +52,18 @@
                             <input type="text" class="form-control" name="pic_name" placeholder="Masukan nama PIC" value="{{old('pic_name')}}">
                         </div>
                         <div class="form-group">
+                            <label for="pic_position">Jabatan PIC <x-required-sign/></label>
+                            <input type="text" class="form-control" name="pic_position" placeholder="Masukan jabatan PIC" value="{{old('pic_position')}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="pic_email">Email PIC <x-required-sign/></label>
+                            <input type="email" class="form-control" name="pic_email" placeholder="Masukan Email PIC" value="{{old('pic_email')}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="pic_phone_number">Nomor HP PIC <x-required-sign/></label>
+                            <input type="text" class="form-control" name="pic_phone_number" placeholder="Masukan Nomor HP PIC" value="{{old('pic_phone_number')}}">
+                        </div>
+                        <div class="form-group">
                             <label for="address">Alamat Kegiatan</label>
                             <textarea class="form-control" name="address" rows="1" placeholder="Masukan alamat kegiatan">{{old('address')}}</textarea>
                         </div>

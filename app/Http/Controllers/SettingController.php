@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\FieldWorkActivity;
-use App\Models\Presence;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 
-class PresenceController extends Controller
+class SettingController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +14,7 @@ class PresenceController extends Controller
      */
     public function index()
     {
-        Presence::all();
-
+        //
     }
 
     /**
@@ -24,9 +22,9 @@ class PresenceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(FieldWorkActivity $fieldWorkActivity)
+    public function create()
     {
-        return view('employee.create',compact('fieldWorkActivity'));
+        //
     }
 
     /**
@@ -43,10 +41,10 @@ class PresenceController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Presence  $presence
+     * @param  \App\Models\Setting  $setting
      * @return \Illuminate\Http\Response
      */
-    public function show(Presence $presence)
+    public function show(Setting $setting)
     {
         //
     }
@@ -54,10 +52,10 @@ class PresenceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Presence  $presence
+     * @param  \App\Models\Setting  $setting
      * @return \Illuminate\Http\Response
      */
-    public function edit(Presence $presence)
+    public function edit(Setting $setting)
     {
         //
     }
@@ -66,10 +64,10 @@ class PresenceController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Presence  $presence
+     * @param  \App\Models\Setting  $setting
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Presence $presence)
+    public function update(Request $request, Setting $setting)
     {
         //
     }
@@ -77,10 +75,10 @@ class PresenceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Presence  $presence
+     * @param  \App\Models\Setting  $setting
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Presence $presence)
+    public function destroy(Setting $setting)
     {
         //
     }

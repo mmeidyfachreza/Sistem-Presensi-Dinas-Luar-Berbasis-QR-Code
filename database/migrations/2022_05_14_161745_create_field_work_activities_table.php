@@ -26,6 +26,7 @@ return new class extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->string('link');
+            $table->boolean('active')->default(true);
             $table->timestamps();
             $table->softDeletes();
         });

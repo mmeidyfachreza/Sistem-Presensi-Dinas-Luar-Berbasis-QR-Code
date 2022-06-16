@@ -24,7 +24,11 @@ class RoleSeeder extends Seeder
 
         Role::where('name','Admin')->first()->givePermissionTo([
             Permission::where('name','like','%employee%')->pluck('name'),
-            Permission::where('name','like','%outgoing work%')->pluck('name'),
+            Permission::where('name','like','%fwa%')->pluck('name'),
+        ]);
+
+        Role::where('name','Karyawan')->first()->givePermissionTo([
+            Permission::where('name','like','%attendance%')->pluck('name'),
         ]);
     }
 }
