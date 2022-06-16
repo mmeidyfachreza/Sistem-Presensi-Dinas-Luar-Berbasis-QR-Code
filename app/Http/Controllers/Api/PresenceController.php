@@ -30,12 +30,11 @@ class PresenceController extends Controller
 
     public function store(Request $request)
     {
-        $coordinate = Qrcode::getCoordinate($request->decodedString);
-        return response(['tes'=>$request->decodedString]);
+        $coordinate = Qrcode::getCoordinate($request->qrcode);
         if (!$this->verificationDistance($request->lat,$request->long, $coordinate[0], $coordinate[1])) {
             return response()->json(['message'=>'anda terlalu jauh dari lokasi presensi yang telah ditentukan'.$request->lat.', '.$request->long],400);
         }
-        if (Qrcode::IsValidQrcode($request->decodedString,$request->userId)) {
+        if (Qrcode::IsValidQrcode($request->qrcode,$request->userId)) {
             return response()->json(['message'=>'QR Code tidak valid'],422);
         }
         if (Presence::havePresence($request->userId)) {
