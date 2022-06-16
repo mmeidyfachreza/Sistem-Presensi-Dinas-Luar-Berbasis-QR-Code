@@ -29,7 +29,9 @@ class Qrcode extends Model
 
     public function scopeGetCoordinate($query,$codewords)
     {
-        return explode(', ',$query->with('field_work_activity')
-        ->whereCodewords($codewords)->first()->field_work_activity->geo_location);
+        return $query->with('field_work_activity.employees')
+        ->whereCodewords($codewords)->exists();
+        // return explode(', ',$query->with('field_work_activity')
+        // ->whereCodewords($codewords)->first()->field_work_activity->geo_location);
     }
 }
