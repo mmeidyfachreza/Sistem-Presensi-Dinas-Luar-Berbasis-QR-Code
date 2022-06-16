@@ -83,11 +83,11 @@ import { mapStores } from 'pinia';
                         if( error.response ){
                             this.$swal({
                             title: 'Error!',
-                            text: 'Error,'+error.response.data,
+                            text: 'Error,'+error.response.data.message,
                             icon: 'error',
                             confirmButtonText: 'Ok'
                             });
-                            console.log(error.response.data.message); // => the response payload
+                            console.log(error.response.data); // => the response payload
                         }
                     });
                 });
