@@ -19,8 +19,8 @@ class Qrcode extends Model
     {
         if ($query->with('field_work_activity.employees')
         ->whereCodewords($codewords)->exists()) {
-            $employee = $this->with('field_work_activity.employees')
-            ->whereCodewords("i4tCbbhl")->first()
+            $employee = $query->with('field_work_activity.employees')
+            ->whereCodewords($codewords)->first()
             ->field_work_activity->employees->pluck('id')->toArray();
             return (in_array($employeeId,$employee))? true : false;
         }
