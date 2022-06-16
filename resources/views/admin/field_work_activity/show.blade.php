@@ -73,7 +73,7 @@
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label>Link Presensi</label>
-                            <p><a href="{{ config('app.url', 'http') }}/guest/{{$fieldWorkActivity->link}}">{{ config('app.url', 'http') }}/qrcode/{{$fieldWorkActivity->link}}</a></p>
+                            <p><a href="{{ config('app.url', 'http') }}/qrcode/{{$fieldWorkActivity->link}}">{{ config('app.url', 'http') }}/qrcode/{{$fieldWorkActivity->link}}</a></p>
                         </div>
                     </div>
                     <div class="col-lg-6">
