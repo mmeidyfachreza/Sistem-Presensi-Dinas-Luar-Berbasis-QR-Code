@@ -7,6 +7,7 @@ export const usePresenceStore = defineStore('presence', {
         /** @type {string[]} */
         startTime: 'belum tercatat',
         endTime: 'belum tercatat',
+        workDuration: '-',
         result: '',
         userId: '',
         show: true,

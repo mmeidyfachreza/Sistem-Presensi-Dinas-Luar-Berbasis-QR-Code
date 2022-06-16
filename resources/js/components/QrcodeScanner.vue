@@ -78,6 +78,7 @@ import { mapStores } from 'pinia';
                             this.presenceStore.startTime = response.data.time
                         }else{
                             this.presenceStore.endTime = response.data.time
+                            this.presenceStore.workDuration = response.data.work_duration
                         }
                     }).catch((error) => {
                         if( error.response ){

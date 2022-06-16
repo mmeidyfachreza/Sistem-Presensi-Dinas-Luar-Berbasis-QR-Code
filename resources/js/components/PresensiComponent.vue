@@ -36,6 +36,7 @@ import { mapStores } from 'pinia';
             .then(response => {
                 this.presenceStore.startTime = response.data.startTime
                 this.presenceStore.endTime = response.data.endTime
+                this.presenceStore.workDuration = response.data.work_duration
                 // this.durasi = response.data.data.durasi_kerja
                 // console.log(this.jam_hadir);
                 //this.linkLoc ='https://www.google.com/maps/place/'+response.data.latitude+','+response.data.longitude

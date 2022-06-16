@@ -23,6 +23,7 @@ class PresenceController extends Controller
             return response()->json([
                 'startTime' => 'belum tercatat',
                 'endTime' => 'belum tercatat',
+                'work_duration' => '-'
             ]);
         }
 
@@ -47,6 +48,7 @@ class PresenceController extends Controller
             $presence->update([
                 'end_time' => $endTime,
                 'end_location' => $request->lat.', '.$request->long,
+                'work_duration' => $totalDuration1
             ]);
             return response()->json([
                 'status' => 'pulang',

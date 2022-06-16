@@ -23,11 +23,11 @@
                         </tr>
                     </tbody>
                 </table>
-                <div class="row">
+                <div class="row" v-show="!this.presenceStore.completePresence()">
                     <!-- <a :href="linkV" v-if="!jam_hadir" class="col-lg-6 btn btn-info">Presensi Hadir</a>
                     <a :href="linkV" v-if="!jam_pulang&&jam_hadir" class="col-lg-6 btn btn-success">Presensi Pulang {{jam_pulang}}</a> -->
                     <button v-if="this.presenceStore.isPresence()" :disabled="this.presenceStore.show" @click="activeScanner" class="col-lg-12 btn btn-info">Catat Pulang</button>
-                    <button v-if="!this.presenceStore.isPresence()" :disabled="this.presenceStore.show" @click="activeScanner" v-show="!this.presenceStore.completePresence()" class="col-lg-12 btn btn-info">Catat Hadir</button>
+                    <button v-if="!this.presenceStore.isPresence()" :disabled="this.presenceStore.show" @click="activeScanner" class="col-lg-12 btn btn-info">Catat Hadir</button>
                     <p v-if="this.presenceStore.completePresence()" class="px-4">Anda sudah melakukan presensi hari ini, selamat beristirahat</p>
                 </div>
             </div>

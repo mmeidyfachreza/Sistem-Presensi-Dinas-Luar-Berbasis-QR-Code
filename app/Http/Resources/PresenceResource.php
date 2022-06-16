@@ -17,6 +17,7 @@ class PresenceResource extends JsonResource
         return [
             'startTime' => $this->start_time ?? 'belum dicatat',
             'endTime' => $this->end_time ?? 'belum dicatat',
+            'work_duration' => $this->work_duration ?? '-',
             'show' => ($this->end_time)? false : true
         ];
     }
