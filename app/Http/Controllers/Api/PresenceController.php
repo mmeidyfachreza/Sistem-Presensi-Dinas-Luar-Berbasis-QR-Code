@@ -72,7 +72,10 @@ class PresenceController extends Controller
                 ]);
             }
         }
-        return response()->json(['message'=>' QR Code tidak valid '.$request->linkId.'+'.$request->qrcode.'+'.$request->userId],422);
+        if (app()->environment(['local', 'staging'])) {
+            return response()->json(['message'=>' QR Code tidak valid '.$request->linkId.'+'.$request->qrcode.'+'.$request->userId],422);
+        }
+        return response()->json(['message'=>' QR Code tidak valid '],422);
         // return response()->json(['presence'=>"ok"]);
     }
 
