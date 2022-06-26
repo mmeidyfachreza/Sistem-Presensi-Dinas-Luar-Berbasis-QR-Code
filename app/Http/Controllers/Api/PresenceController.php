@@ -68,9 +68,8 @@ class PresenceController extends Controller
                     'time'=>$presence->start_time
                 ]);
             }
-
-            return response()->json(['message'=>'QR Code tidak valid'],422);
         }
+        return response()->json(['message'=>'QR Code tidak valid'],422);
         // return response()->json(['presence'=>"ok"]);
     }
 
