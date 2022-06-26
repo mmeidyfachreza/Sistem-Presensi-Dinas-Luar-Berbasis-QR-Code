@@ -18,7 +18,7 @@ class PresenceResource extends JsonResource
         return [
             'startTime' => $this->start_time ?? 'belum dicatat',
             'endTime' => $this->end_time ?? 'belum dicatat',
-            'work_duration' => Carbon::parse($this->work_duration)->diffForHumans(null,true) ?? '-',
+            'work_duration' => Carbon::now()->subSeconds($this->work_duration)->diffForHumans(null,true) ?? '-',
             'show' => ($this->end_time)? false : true
         ];
     }

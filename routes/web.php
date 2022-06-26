@@ -39,7 +39,7 @@ Route::get('bc', function () {
     // $a = Carbon::now()->format('H:i:s');
     // $a = Carbon::parse($a);
     $a = Carbon::parse('02:30:00');
-    $b = Carbon::parse('02:30:00')->diffForHumans(null,true);
+    $b = Carbon::now()->subSeconds('30')->diffForHumans(null,true);
     echo $a;
     dd($b);
 });
