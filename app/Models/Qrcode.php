@@ -22,9 +22,10 @@ class Qrcode extends Model
         ->whereCodewords($codewords);
 
         if ($query->exists()) {
-            $validEmployeeId = $query->first()->field_work_activity
-            ->employees->pluck('id')->toArray();
-            return (in_array($employeeId,$validEmployeeId))? true : false;
+            // $validEmployeeId = $query->first()->field_work_activity
+            // ->employees->pluck('id')->toArray();
+            // return (in_array($employeeId,$validEmployeeId))? true : false;
+            return true;
         }
         // if ($query->with('field_work_activity.employees')
         // ->whereCodewords($codewords)->whereId($linkid)->exists()) {
