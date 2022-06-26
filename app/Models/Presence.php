@@ -16,7 +16,8 @@ class Presence extends Model
         'start_time',
         'end_time',
         'start_location',
-        'end_location'
+        'end_location',
+        'work_duration'
     ];
 
     public function scopeHavePresence($query,$employeeId)
