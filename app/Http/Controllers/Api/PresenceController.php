@@ -54,7 +54,7 @@ class PresenceController extends Controller
                 ]);
                 return response()->json([
                     'status' => 'pulang',
-                    'time'=>$presence->end_time,
+                    'time'=>$totalDuration1,
                     'work_duration' => $totalDuration1
                 ]);
             }else{
