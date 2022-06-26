@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('qrcodes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('field_work_activity_id')->constrained();
+            $table->foreignId('field_work_activity_id')->constrained()->cascadeOnDelete();
             $table->string('codewords');
             $table->boolean('active')->default(true);
             $table->timestamps();
