@@ -72,6 +72,10 @@
                             <input type="text" class="form-control" name="geo_location" placeholder="Contoh: -7.771541, 110.361463" value="{{old('geo_location')}}">
                         </div>
                         <div class="form-group">
+                            <label for="tolerance_distance">Batas Jarak (satuan meter) <x-required-sign/></label>
+                            <input type="number" class="form-control" name="tolerance_distance" placeholder="Masukan Batas Jarak" value="{{old('tolerance_distance')}}">
+                        </div>
+                        <div class="form-group">
                             <label for="daterange">Jadwal Kegiatan <x-required-sign/></label>
                             <input type="text" class="form-control float-right" id="reservation" name="daterange">
                         </div>

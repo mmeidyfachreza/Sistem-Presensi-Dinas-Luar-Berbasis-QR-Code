@@ -72,8 +72,8 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
-                            <label>Link Presensi</label>
-                            <p><a href="{{ config('app.url', 'http') }}/qrcode/{{$fieldWorkActivity->link}}">{{ config('app.url', 'http') }}/qrcode/{{$fieldWorkActivity->link}}</a></p>
+                            <label>Batas Jarak</label>
+                            <p>{{$fieldWorkActivity->tolerance_distance ?? ''}} Meter</p>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -97,10 +97,21 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label>Kontak</label>
-                    <p>HP : {{$fieldWorkActivity->pic_phone_number ?? '-'}} / Email : {{$fieldWorkActivity->pic_email ?? '-'}}</p>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>Link Presensi</label>
+                            <p><a href="{{ config('app.url', 'http') }}/qrcode/{{$fieldWorkActivity->link}}">{{ config('app.url', 'http') }}/qrcode/{{$fieldWorkActivity->link}}</a></p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>Kontak</label>
+                            <p>HP : {{$fieldWorkActivity->pic_phone_number ?? '-'}} / Email : {{$fieldWorkActivity->pic_email ?? '-'}}</p>
+                        </div>
+                    </div>
                 </div>
+
             </div>
             <div class="card-footer">
 

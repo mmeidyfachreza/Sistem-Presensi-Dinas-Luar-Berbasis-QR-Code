@@ -13,7 +13,9 @@ class FieldWorkActivity extends Model
 {
     use HasFactory,SoftDeletes,Sluggable,SluggableScopeHelpers;
 
-    protected $fillable = ['project_name','description','pic_name','pic_email','pic_phone_number','pic_position','address','geo_location','start_date','end_date','date','link'];
+    protected $fillable = ['project_name','description','pic_name','pic_email',
+    'pic_phone_number','pic_position','address','geo_location','start_date',
+    'end_date','date','link','tolerance_distance'];
     protected $dates = ['start_date','end_date'];
 
     public function employees()

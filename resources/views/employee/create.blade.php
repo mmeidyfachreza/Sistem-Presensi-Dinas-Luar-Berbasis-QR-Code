@@ -9,6 +9,17 @@
         <Presensi-Component project-id="{{ $fieldWorkActivity->id }}"><Presensi-Component/>
     </div>
 </section>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <p> <b>Catatan:</b> pastikan lokasi anda berada di sekitar titik <a href="https://maps.google.com/maps?z=12&t=m&q=loc:{{str_replace(', ','+',$fieldWorkActivity->geo_location)}}" target="_blank">{{$fieldWorkActivity->geo_location}}</a> sebelum melakukan presensi</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @endsection
 @section('plugin-js')

@@ -10,6 +10,7 @@ use App\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use App\Events\MessageSent;
+use App\Models\FieldWorkActivity;
 use App\Models\Qrcode;
 use Illuminate\Support\Facades\Auth;
 
@@ -32,8 +33,10 @@ class PresenceController extends Controller
     public function store(Request $request)
     {
         if (Qrcode::IsValidQrcode($request->qrcode,$request->userId,$request->linkId)) {
-            $coordinate = Qrcode::getCoordinate($request->qrcode);
-            if (!$this->verificationDistance($request->lat,$request->long, $coordinate[0], $coordinate[1])) {
+            $fieldWorkActivity = FieldWorkActivity::find($request->linkId);
+            $coordinate = explode(', ',$fieldWorkActivity->geo_location);
+            // $coordinate = Qrcode::getCoordinate($request->qrcode);
+            if (!$this->verificationDistance($request->lat,$request->long, $coordinate[0], $coordinate[1], $fieldWorkActivity->tolerance_distance)) {
                 return response()->json(['message'=>'anda terlalu jauh dari lokasi presensi yang telah ditentukan'.$request->lat.', '.$request->long],400);
             }
 
@@ -74,7 +77,7 @@ class PresenceController extends Controller
     }
 
     function verificationDistance(
-        $latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo, $earthRadius = 6371000)
+        $latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo, $tolerance_distance, $earthRadius = 6371000)
     {
     //haversine formula
     // convert from degrees to radians
@@ -89,7 +92,7 @@ class PresenceController extends Controller
     $angle = 2 * asin(sqrt(pow(sin($latDelta / 2), 2) +
         cos($latFrom) * cos($latTo) * pow(sin($lonDelta / 2), 2)));
     $result = $angle * $earthRadius;
-    if ($result >= Setting::first()->tolerance_distance ) {
+    if ($result >= $tolerance_distance ) {
         return false;
     }
     return true;
