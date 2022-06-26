@@ -15,10 +15,10 @@ class Qrcode extends Model
         return $this->belongsTo(FieldWorkActivity::class,'field_work_activity_id');
 
     }
-    public function scopeIsValidQrcode($query,$codewords,$employeeId)
+    public function scopeIsValidQrcode($query,$codewords,$employeeId,$linkid)
     {
         if ($query->with('field_work_activity.employees')
-        ->whereCodewords($codewords)->exists()) {
+        ->whereCodewords($codewords)->whereId($linkid)->exists()) {
             $employee = $query->with('field_work_activity.employees')
             ->whereCodewords($codewords)->first()
             ->field_work_activity->employees->pluck('id')->toArray();

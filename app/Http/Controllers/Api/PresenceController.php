@@ -31,47 +31,47 @@ class PresenceController extends Controller
 
     public function store(Request $request)
     {
-        // if (Qrcode::IsValidQrcode($request->qrcode,$request->userId)) {
-        //     $coordinate = Qrcode::getCoordinate($request->qrcode);
-        //     if (!$this->verificationDistance($request->lat,$request->long, $coordinate[0], $coordinate[1])) {
-        //         return response()->json(['message'=>'anda terlalu jauh dari lokasi presensi yang telah ditentukan'.$request->lat.', '.$request->long],400);
-        //     }
+        if (Qrcode::IsValidQrcode($request->qrcode,$request->userId,$request->linkId)) {
+            $coordinate = Qrcode::getCoordinate($request->qrcode);
+            if (!$this->verificationDistance($request->lat,$request->long, $coordinate[0], $coordinate[1])) {
+                return response()->json(['message'=>'anda terlalu jauh dari lokasi presensi yang telah ditentukan'.$request->lat.', '.$request->long],400);
+            }
 
-        //     if (Presence::havePresence($request->userId)) {
-        //         $presence = Presence::getPresence($request->userId);
-        //         $endTime = Carbon::now()->format('H:i:s');
-        //         $time1 = Carbon::parse($presence->start_time);
-        //         $time2 = Carbon::parse($endTime);
-        //         $totalDuration1 =$time1->diff($endTime)->format('%i');
+            if (Presence::havePresence($request->userId)) {
+                $presence = Presence::getPresence($request->userId);
+                $endTime = Carbon::now()->format('H:i:s');
+                $time1 = Carbon::parse($presence->start_time);
+                $time2 = Carbon::parse($endTime);
+                $totalDuration1 =$time1->diff($endTime)->format('%i');
 
-        //         $presence->update([
-        //             'end_time' => $endTime,
-        //             'end_location' => $request->lat.', '.$request->long,
-        //             'work_duration' => $totalDuration1
-        //         ]);
-        //         return response()->json([
-        //             'status' => 'pulang',
-        //             'time'=>$presence->end_time,
-        //             'work_duration' => $totalDuration1
-        //         ]);
-        //     }else{
-        //         $presence = Presence::create([
-        //             'employee_id' => $request->userId,
-        //             'field_work_activity_id' => 1,
-        //             'date' => Carbon::now()->format('Y-m-d'),
-        //             'start_time' => Carbon::now()->format('H:i:s'),
-        //             'start_location' => $request->lat.', '.$request->long,
-        //         ]);
-        //         return response()->json([
-        //             'status' => 'hadir',
-        //             'show' => false,
-        //             'time'=>$presence->start_time
-        //         ]);
-        //     }
+                $presence->update([
+                    'end_time' => $endTime,
+                    'end_location' => $request->lat.', '.$request->long,
+                    'work_duration' => $totalDuration1
+                ]);
+                return response()->json([
+                    'status' => 'pulang',
+                    'time'=>$presence->end_time,
+                    'work_duration' => $totalDuration1
+                ]);
+            }else{
+                $presence = Presence::create([
+                    'employee_id' => $request->userId,
+                    'field_work_activity_id' => 1,
+                    'date' => Carbon::now()->format('Y-m-d'),
+                    'start_time' => Carbon::now()->format('H:i:s'),
+                    'start_location' => $request->lat.', '.$request->long,
+                ]);
+                return response()->json([
+                    'status' => 'hadir',
+                    'show' => false,
+                    'time'=>$presence->start_time
+                ]);
+            }
 
-        //     return response()->json(['message'=>'QR Code tidak valid'],422);
-        // }
-        return response()->json(['presence'=>$request->linkId]);
+            return response()->json(['message'=>'QR Code tidak valid'],422);
+        }
+        // return response()->json(['presence'=>"ok"]);
     }
 
     function verificationDistance(
