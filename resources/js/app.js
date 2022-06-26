@@ -18,6 +18,7 @@ window.Vue = require('vue').default;
 
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+Vue.prototype.$userId = document.querySelector("meta[name='user_id']").getAttribute('content');
 Vue.component('presensi-component', require('./components/PresensiComponent.vue').default);
 Vue.component('component-a', require('./components/ComponentA.vue').default);
 

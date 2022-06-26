@@ -3,10 +3,10 @@
 
 @endsection
 @section('content')
-<x-content-header name="Presensi {{$fieldWorkActivity->project_name}} {{ Auth::user()->employee->id }}" />
+<x-content-header name="Presensi {{$fieldWorkActivity->project_name}}" />
 <section class="content" id="app">
     <div class="container-fluid">
-        <Presensi-Component project-id="{{ $fieldWorkActivity->id }} user-id={{ Auth::user()->employee->id }}"><Presensi-Component/>
+        <Presensi-Component project-id="{{ $fieldWorkActivity->id }}"><Presensi-Component/>
     </div>
 </section>
 <div class="container-fluid">

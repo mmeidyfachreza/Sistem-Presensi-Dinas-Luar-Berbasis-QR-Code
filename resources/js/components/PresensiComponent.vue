@@ -12,11 +12,17 @@ import { usePresenceStore } from '../store/presenceStore'
 import { mapStores } from 'pinia';
 
     export default {
-        props: ['projectId','userId'],
+        props: ['projectId'],
         computed: {
         // note we are not passing an array, just one store after the other
         // each store will be accessible as its id + 'Store'
         ...mapStores(usePresenceStore)
+        },
+        data()
+        {
+            return{
+                user_id: this.$userId,
+            }
         },
         components: {
             PresenceInfo,
@@ -24,7 +30,7 @@ import { mapStores } from 'pinia';
         },
         created(){
             this.presenceStore.linkId = this.projectId
-            this.presenceStore.userId = this.userId
+            this.presenceStore.userId = this.user_id
             this.presenceStore.pause()
             this.presenceStore.show = false
             axios

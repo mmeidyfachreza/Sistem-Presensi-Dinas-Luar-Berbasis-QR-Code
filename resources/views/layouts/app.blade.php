@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @if (Auth::check())
-    <meta name="user_id" content="{{ Auth::user()->id }}" />
+    <meta name="user_id" content="{{ Auth::user()->employee_id ?? '0' }}" />
     @endif
     <title>{{ config('app.name', 'mumefa-project') }}</title>
 
