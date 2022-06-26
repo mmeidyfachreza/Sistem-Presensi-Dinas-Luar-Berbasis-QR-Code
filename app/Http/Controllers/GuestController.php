@@ -9,7 +9,9 @@ class GuestController extends Controller
 {
     public function show($slugString)
     {
-        $codewords =  FieldWorkActivity::findBySlug($slugString)->qrcode->codewords;
-        return view('guest.qrcode',compact('codewords'));
+        $link = FieldWorkActivity::findBySlug($slugString);
+        $codewords =  $link->qrcode->codewords;
+        $projectName = $link->project_name;
+        return view('guest.qrcode',compact('codewords','projectName'));
     }
 }
