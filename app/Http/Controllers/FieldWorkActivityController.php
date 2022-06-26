@@ -119,7 +119,9 @@ class FieldWorkActivityController extends Controller
      */
     public function destroy(FieldWorkActivity $fieldWorkActivity)
     {
-        //
+        $fieldWorkActivity->delete();
+        return redirect()->route('field_work_activity.index')
+            ->with('success','Berhasil menghapus data ');
     }
 
     /**
