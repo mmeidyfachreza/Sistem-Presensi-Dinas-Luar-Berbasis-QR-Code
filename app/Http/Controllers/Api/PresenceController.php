@@ -45,7 +45,7 @@ class PresenceController extends Controller
                 $endTime = Carbon::now()->format('H:i:s');
                 $time1 = Carbon::parse($presence->start_time);
                 $time2 = Carbon::parse($endTime);
-                $totalDuration1 =$time1->diff($endTime)->format('%i');
+                $totalDuration1 =$time1->diffInSeconds($endTime);
 
                 $presence->update([
                     'end_time' => $endTime,
