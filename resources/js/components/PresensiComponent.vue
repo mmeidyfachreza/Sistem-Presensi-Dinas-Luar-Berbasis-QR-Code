@@ -29,7 +29,7 @@ import { mapStores } from 'pinia';
             QrcodeScanner,
         },
         created(){
-            this.id = this.projectId
+            this.presenceStore.linkId = this.projectId
             this.presenceStore.userId = this.user_id
             this.presenceStore.pause()
             this.presenceStore.show = false

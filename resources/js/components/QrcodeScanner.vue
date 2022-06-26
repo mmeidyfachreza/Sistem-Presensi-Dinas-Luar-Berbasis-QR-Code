@@ -73,7 +73,7 @@ import { mapStores } from 'pinia';
                         userId: this.presenceStore.userId,
                         lat: coordinates.lat,
                         long: coordinates.lng,
-                        linkId: this.presenceStore.id
+                        linkId: this.presenceStore.linkId
                     }).then(response => {
                         if(response.data.status=='hadir'){
                             this.presenceStore.startTime = response.data.time

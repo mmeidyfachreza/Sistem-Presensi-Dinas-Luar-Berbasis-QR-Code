@@ -13,7 +13,7 @@ export const usePresenceStore = defineStore('presence', {
         show: true,
         camera: 'auto',
         showScanConfirmation: false,
-        id: 0
+        linkId: 0
     }),
     actions: {
     async fetchUsers() {
