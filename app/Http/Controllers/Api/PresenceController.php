@@ -69,7 +69,7 @@ class PresenceController extends Controller
                 ]);
             }
         }
-        return response()->json(['message'=>'QR Code tidak valid'],422);
+        return response()->json(['message'=>' QR Code tidak valid '.$request->linkId.' '.$request->qrcode],422);
         // return response()->json(['presence'=>"ok"]);
     }
 
