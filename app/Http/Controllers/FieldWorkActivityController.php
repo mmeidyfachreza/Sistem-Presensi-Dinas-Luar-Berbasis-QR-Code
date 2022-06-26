@@ -96,7 +96,16 @@ class FieldWorkActivityController extends Controller
      */
     public function edit(FieldWorkActivity $fieldWorkActivity)
     {
-        //
+        $employees = Employee::select('id','name')->get();
+        if ($fieldWorkActivity->employees()->count()) {
+            foreach ($fieldWorkActivity->employees()->get() as $value) {
+                $teams[] = $value->id;
+            }
+        }else{
+            $teams = array();
+        }
+
+        return view('admin.field_work_activity.edit',compact('fieldWorkActivity','employees','teams'));
     }
 
     /**
@@ -108,7 +117,28 @@ class FieldWorkActivityController extends Controller
      */
     public function update(Request $request, FieldWorkActivity $fieldWorkActivity)
     {
-        //
+        DB::beginTransaction();
+        try {
+            //membuat agenda dinas keluar beserta karyawan yang terlibat
+            $fieldWorkActivity->update(array_merge($request->all(),[
+                'start_date'=>explode(' - ',$request->daterange)[0],
+                'end_date'=>explode(' - ',$request->daterange)[1]
+            ]));
+            if (isset($request->team)) {
+                $fieldWorkActivity->employees()->sync($request->team);
+            }
+
+            DB::commit();
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect()->route('field_work_activity.create')->withErrors(['message'=>$e->getMessage()]);
+        }
+
+        if (isset($request->exit)&&$request->exit) {
+            return redirect()->route('field_work_activity.index')
+            ->with('success','Berhasil merubah data ');
+        }
+        return redirect()->route('field_work_activity.edit')->with('success','Berhasil menambah data');
     }
 
     /**

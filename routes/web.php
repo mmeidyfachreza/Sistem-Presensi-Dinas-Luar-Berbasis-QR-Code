@@ -63,7 +63,7 @@ Route::group(['middleware' => ['auth'],'prefix'=>'admin'], function () {
     Route::post('kegiatan-kerja-lapangan/store', [FieldWorkActivityController::class,'store'])->name('field_work_activity.store');
     Route::get('kegiatan-kerja-lapangan', [FieldWorkActivityController::class,'index'])->name('field_work_activity.index');
     Route::get('kegiatan-kerja-lapangan/{fieldWorkActivity}/show', [FieldWorkActivityController::class,'show'])->name('field_work_activity.show');
-    Route::put('kegiatan-kerja-lapangan/{fieldWorkActivity}/update', [FieldWorkActivityController::class,'index'])->name('field_work_activity.update');
+    Route::put('kegiatan-kerja-lapangan/{fieldWorkActivity}/update', [FieldWorkActivityController::class,'update'])->name('field_work_activity.update');
     Route::get('kegiatan-kerja-lapangan/{fieldWorkActivity}/edit', [FieldWorkActivityController::class,'edit'])->name('field_work_activity.edit');
     Route::delete('kegiatan-kerja-lapangan/{fieldWorkActivity}', [FieldWorkActivityController::class,'destroy'])->name('field_work_activity.destroy');
     Route::get('kegiatan-kerja-lapangan/filter', [FieldWorkActivityController::class,'filter'])->name('field_work_activity.filter');
