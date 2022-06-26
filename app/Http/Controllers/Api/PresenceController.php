@@ -45,17 +45,18 @@ class PresenceController extends Controller
                 $endTime = Carbon::now()->format('H:i:s');
                 $time1 = Carbon::parse($presence->start_time);
                 $time2 = Carbon::parse($endTime);
-                $totalDuration1 =$time1->diffInSeconds($endTime);
+                $work_duration =$time1->diffInSeconds($time2);
+
 
                 $presence->update([
                     'end_time' => $endTime,
                     'end_location' => $request->lat.', '.$request->long,
-                    'work_duration' => $totalDuration1
+                    'work_duration' => $work_duration
                 ]);
                 return response()->json([
                     'status' => 'pulang',
-                    'time'=>$totalDuration1,
-                    'work_duration' => $totalDuration1
+                    'time'=>$presence->end_time,
+                    'work_duration' => $time1->diffForHumans($time2,true)
                 ]);
             }else{
                 $presence = Presence::create([
