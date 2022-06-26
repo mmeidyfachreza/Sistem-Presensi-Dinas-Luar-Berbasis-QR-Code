@@ -15,15 +15,24 @@ class Qrcode extends Model
         return $this->belongsTo(FieldWorkActivity::class,'field_work_activity_id');
 
     }
-    public function scopeIsValidQrcode($query,$codewords,$employeeId,$linkid)
+    public function scopeIsValidQrcode($query,$codewords,$employeeId,$linkId)
     {
-        if ($query->with('field_work_activity.employees')
-        ->whereCodewords($codewords)->whereId($linkid)->exists()) {
-            $employee = $query->with('field_work_activity.employees')
-            ->whereCodewords($codewords)->first()
-            ->field_work_activity->employees->pluck('id')->toArray();
-            return (in_array($employeeId,$employee))? true : false;
+        $query = $query->with('field_work_activity.employees')
+        ->whereFieldWorkActivityId($linkId)
+        ->whereCodewords($codewords);
+
+        if ($query->exists()) {
+            $validEmployeeId = $query->first()->field_work_activity
+            ->employees->pluck('id')->toArray();
+            return (in_array($employeeId,$validEmployeeId))? true : false;
         }
+        // if ($query->with('field_work_activity.employees')
+        // ->whereCodewords($codewords)->whereId($linkid)->exists()) {
+        //     $employee = $query->with('field_work_activity.employees')
+        //     ->whereCodewords($codewords)->first()
+        //     ->field_work_activity->employees->pluck('id')->toArray();
+
+        // }
         return false;
     }
 
