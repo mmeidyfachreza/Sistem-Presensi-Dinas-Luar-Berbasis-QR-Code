@@ -72,7 +72,8 @@ import { mapStores } from 'pinia';
                         qrcode: decodedString,
                         userId: this.presenceStore.userId,
                         lat: coordinates.lat,
-                        long: coordinates.lng
+                        long: coordinates.lng,
+                        linkId: this.presenceStore.id
                     }).then(response => {
                         if(response.data.status=='hadir'){
                             this.presenceStore.startTime = response.data.time

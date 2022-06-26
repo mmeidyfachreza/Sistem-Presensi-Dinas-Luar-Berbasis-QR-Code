@@ -12,7 +12,8 @@ export const usePresenceStore = defineStore('presence', {
         userId: '',
         show: true,
         camera: 'auto',
-        showScanConfirmation: false
+        showScanConfirmation: false,
+        id: 0
     }),
     actions: {
     async fetchUsers() {

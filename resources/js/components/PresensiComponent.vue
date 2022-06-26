@@ -12,6 +12,7 @@ import { usePresenceStore } from '../store/presenceStore'
 import { mapStores } from 'pinia';
 
     export default {
+        props: ['projectId'],
         computed: {
         // note we are not passing an array, just one store after the other
         // each store will be accessible as its id + 'Store'
@@ -28,6 +29,7 @@ import { mapStores } from 'pinia';
             QrcodeScanner,
         },
         created(){
+            this.id = this.projectId
             this.presenceStore.userId = this.user_id
             this.presenceStore.pause()
             this.presenceStore.show = false

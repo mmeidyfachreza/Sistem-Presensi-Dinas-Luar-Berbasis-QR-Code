@@ -6,7 +6,7 @@
 <x-content-header name="Presensi {{$fieldWorkActivity->project_name}}" />
 <section class="content" id="app">
     <div class="container-fluid">
-        <Presensi-Component><Presensi-Component/>
+        <Presensi-Component project-id="{{ $fieldWorkActivity->id }}"><Presensi-Component/>
     </div>
 </section>
 
