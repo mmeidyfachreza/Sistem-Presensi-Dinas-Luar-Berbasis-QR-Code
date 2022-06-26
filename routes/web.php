@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return redirect()->route('dashboard');
 });
-Route::get('qrcode/{slugString}', [GuestController::class,'show']);
+Route::get('qrcode/{slugString}', [GuestController::class,'show'])->name('qrcode.show');
 
 Route::get('bc', function () {
     // broadcast(new MessageSent('holla'))->toOthers();
