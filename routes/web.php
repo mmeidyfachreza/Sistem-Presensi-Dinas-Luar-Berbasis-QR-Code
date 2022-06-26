@@ -6,6 +6,7 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\FieldWorkActivityController;
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\PresenceController;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -26,15 +27,21 @@ Route::get('/', function () {
 Route::get('qrcode/{slugString}', [GuestController::class,'show'])->name('qrcode.show');
 
 Route::get('bc', function () {
-    // broadcast(new MessageSent('holla'))->toOthers();
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $randomString = '';
+    // // broadcast(new MessageSent('holla'))->toOthers();
+    // $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    // $randomString = '';
 
-    for ($i = 0; $i < 8; $i++) {
-        $index = rand(0, strlen($characters) - 1);
-        $randomString .= $characters[$index];
-    }
-    echo $randomString;
+    // for ($i = 0; $i < 8; $i++) {
+    //     $index = rand(0, strlen($characters) - 1);
+    //     $randomString .= $characters[$index];
+    // }
+    // echo $randomString;
+    // $a = Carbon::now()->format('H:i:s');
+    // $a = Carbon::parse($a);
+    $a = Carbon::parse('02:30:00');
+    $b = Carbon::parse('02:30:00')->diffForHumans(null,true);
+    echo $a;
+    dd($b);
 });
 Auth::routes();
 

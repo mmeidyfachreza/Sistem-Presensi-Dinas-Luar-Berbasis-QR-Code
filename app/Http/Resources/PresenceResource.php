@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Carbon;
 
 class PresenceResource extends JsonResource
 {
@@ -17,7 +18,7 @@ class PresenceResource extends JsonResource
         return [
             'startTime' => $this->start_time ?? 'belum dicatat',
             'endTime' => $this->end_time ?? 'belum dicatat',
-            'work_duration' => $this->work_duration ?? '-',
+            'work_duration' => Carbon::parse($this->work_duration)->diffForHumans(null,true) ?? '-',
             'show' => ($this->end_time)? false : true
         ];
     }

@@ -19,7 +19,7 @@
                         <tr>
                             <td class="label">Durasi Kerja</td>
                             <td>:</td>
-                            <td>{{presenceStore.result}}</td>
+                            <td>{{presenceStore.workDuration}}</td>
                         </tr>
                     </tbody>
                 </table>
