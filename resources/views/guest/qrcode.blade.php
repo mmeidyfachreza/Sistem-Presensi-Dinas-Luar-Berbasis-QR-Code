@@ -15,7 +15,7 @@
 <br>
 <br>
 <br>
-@if (app()->environment(['local', 'staging']))
+@if (app()->environment(['local', 'staging','testing']))
 <section class="content">
     <form action="{{ route("qrcode.show",$slugString) }}" method="GET">
         @csrf
