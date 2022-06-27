@@ -1,7 +1,8 @@
 <template>
     <div class="row justify-content-center">
-        <PresenceInfo/>
         <QrcodeScanner/>
+        <PresenceInfo/>
+
     </div>
 </template>
 
