@@ -81,6 +81,13 @@ import { mapStores } from 'pinia';
                             this.presenceStore.endTime = response.data.time
                             this.presenceStore.workDuration = response.data.work_duration
                         }
+
+                        this.$swal({
+                        title: 'Berhasil!',
+                        text: 'Presensi sudah dicatat',
+                        icon: 'success',
+                        confirmButtonText: 'Ok'
+                        });
                     }).catch((error) => {
                         if( error.response ){
                             this.$swal({
