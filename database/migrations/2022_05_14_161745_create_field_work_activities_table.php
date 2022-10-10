@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('pic_phone_number');
             $table->string('address');
             $table->string('geo_location');
-            $table->integer('tolerance_distance');
+            $table->integer('tolerance_distance')->nullable();
             $table->date('start_date');
             $table->date('end_date');
             $table->string('link');
