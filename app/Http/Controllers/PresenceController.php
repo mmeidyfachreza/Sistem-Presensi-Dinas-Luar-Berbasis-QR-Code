@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\FieldWorkActivity;
 use App\Models\Presence;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PresenceController extends Controller
@@ -15,8 +16,8 @@ class PresenceController extends Controller
      */
     public function index()
     {
-        Presence::all();
-
+        $presences = Presence::with('employee','field_work_activity')->paginate();
+        return view('admin.presence.index',compact('presences'));
     }
 
     /**
@@ -27,17 +28,6 @@ class PresenceController extends Controller
     public function create(FieldWorkActivity $fieldWorkActivity)
     {
         return view('employee.create',compact('fieldWorkActivity'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
@@ -52,29 +42,6 @@ class PresenceController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Presence  $presence
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Presence $presence)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Presence  $presence
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Presence $presence)
-    {
-        //
-    }
-
-    /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Presence  $presence
@@ -83,5 +50,19 @@ class PresenceController extends Controller
     public function destroy(Presence $presence)
     {
         //
+    }
+
+    public function print()
+    {
+        $presences = Presence::with('employee')
+            ->orderBy('date')
+            ->get()
+            ->groupBy([function ($val) {
+                return Carbon::parse($val->date)->format('F');
+            },'employee.name',function ($val) {
+                return Carbon::parse($val->date)->format('d');
+            }])->toArray();
+        $dayInMonth = Carbon::now()->daysInMonth;
+        return view('print.assignment_order_print',compact('presences','dayInMonth'));
     }
 }

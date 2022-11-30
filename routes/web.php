@@ -6,9 +6,12 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\FieldWorkActivityController;
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\PresenceController;
+use App\Models\Presence;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
+use function PHPSTORM_META\map;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,10 +41,25 @@ Route::get('bc', function () {
     // echo $randomString;
     // $a = Carbon::now()->format('H:i:s');
     // $a = Carbon::parse($a);
-    $a = Carbon::parse('02:30:00');
-    $b = Carbon::now()->subSeconds('30')->diffForHumans(null,true);
-    echo $a;
-    dd($b);
+    // $a = Carbon::parse('02:30:00');
+    // $b = Carbon::now()->subSeconds('30')->diffForHumans(null,true);
+    // echo $a;
+    // dd($b);
+    $data = Presence::with('employee')
+            ->orderBy('date')
+            ->get()
+            ->groupBy([function ($val) {
+                return Carbon::parse($val->date)->format('F');
+            },'employee.name',function ($val) {
+                return Carbon::parse($val->date)->format('d');
+            }]);
+            // ->map(function ($q){
+            //     return $q->groupBy(function ($val) {
+            //         return Carbon::parse($val->date)->format('d');
+            //     })->toArray();
+            // })
+
+    dd($data[]);
 });
 Auth::routes();
 
@@ -75,6 +93,12 @@ Route::group(['middleware' => ['auth'],'prefix'=>'admin'], function () {
     Route::delete('kegiatan-kerja-lapangan/{fieldWorkActivity}', [FieldWorkActivityController::class,'destroy'])->name('field_work_activity.destroy');
     Route::get('kegiatan-kerja-lapangan/filter', [FieldWorkActivityController::class,'filter'])->name('field_work_activity.filter');
 
+
+    Route::get('presensi', [PresenceController::class,'index'])->name('presence.index');
+    Route::get('presensi/{presence}/show', [PresenceController::class,'show'])->name('presence.show');
+    Route::delete('presensi/{presence}', [PresenceController::class,'destroy'])->name('presence.destroy');
+    Route::get('presensi/filter', [PresenceController::class,'filter'])->name('presence.filter');
+    Route::get('presensi/print',[PresenceController::class,'print'])->name('presence.print');
 
 
     // Route::get('tes', function () {

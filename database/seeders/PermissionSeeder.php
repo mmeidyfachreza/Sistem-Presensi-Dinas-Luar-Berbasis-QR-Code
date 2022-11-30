@@ -35,6 +35,7 @@ class PermissionSeeder extends Seeder
             ['name' => 'show attendance'],
             ['name' => 'delete attendance'],
             ['name' => 'show qrcode'],
+            ['name' => 'index report'],
             ['name' => 'setting'],
         ];
 

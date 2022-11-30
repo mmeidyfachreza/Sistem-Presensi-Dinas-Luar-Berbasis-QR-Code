@@ -29,4 +29,14 @@ class Presence extends Model
     {
         return $query-> whereEmployeeId($employeeId)->where('date',Carbon::now()->format('Y-m-d'))->first();
     }
+
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class,'employee_id');
+    }
+
+    public function field_work_activity()
+    {
+        return $this->belongsTo(FieldWorkActivity::class,'field_work_activity_id');
+    }
 }

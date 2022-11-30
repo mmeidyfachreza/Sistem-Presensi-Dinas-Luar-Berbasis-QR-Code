@@ -9,12 +9,16 @@
         body{
             font-family: 'Times New Roman', Times, serif;
         }
+        table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
         #header{
             text-align: center;
         }
         #content{
-            padding-left: 10%;
-            padding-right: 10%;
+            padding-left: 2%;
+            padding-right: 2%;
         }
         td{
             padding-bottom: 10px;
@@ -34,14 +38,38 @@
 </head>
 <body>
     <div id="header">
-        <h3><u>SURAT PERINTAH TUGAS</u></h3>
+        <h3><u>Rekap Presensi Karyawan</u></h3>
     </div>
     <div id="content">
-        <table>
-            <tr>
+        @foreach ($presences as $month => $employees)
+        <p><b>Bulan: {{$month}}</b></p>
+        <table style="width: 100%">
+            <thead>
+                <tr>
+                    <th>Nama</th>
+                    @for ($i = 0; $i < $dayInMonth; $i++)
+                        <th>{{$i+1}}</th>
+                    @endfor
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($employees as $name => $day)
+                <tr>
+                    <td>{{$name}}</td>
+                    @for ($i = 0; $i < $dayInMonth; $i++)
+                    @if (isset($day[$i]))
+                    <td>{{$day[$i][0]['work_duration']}} Jam</td>
+                    @else
+                    <td>-</td>
+                    @endif
+                    @endfor
+                </tr>
+                @endforeach
+            </tbody>
+            {{-- <tr>
                 <td>Nama</td>
                 <td>:</td>
-                <td>{{$assignmentOrder->employee->name}}</td>
+                <td>{{$presence->employee->name}}</td>
             </tr>
             <tr>
                 <td>Unit</td>
@@ -62,43 +90,9 @@
                 <td>Dari Tanggal</td>
                 <td>:</td>
                 <td>{{$assignmentOrder->start_date}} -  {{$assignmentOrder->end_date}}</td>
-            </tr>
+            </tr> --}}
         </table>
-        @if ($assignmentOrder->teams()->exists())
-        <p>bersama dengan karyawan berikut:</p>
-        <table style="width: 100%; border-collapse: collapse;" id="teams">
-            <thead>
-                <tr>
-                    <th>Nama</th>
-                    <th>Unit</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($assignmentOrder->teams()->get() as $item)
-                <tr>
-                    <td>{{$item->name}}</td>
-                    <td style="text-align: center">{{$item->position->name ?? "Belum Diatur"}}</td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-        @endif
-        <p>Demikianlah surat tugas ini dibuat untuk dapat dilaksanakan sebagaimana mestinya.</p>
-        <table id="signature">
-            <tr>
-                <td>Penyelia Unit</td>
-                <td>Penyelia Umum</td>
-            </tr>
-            <tr>
-                <td><img style="width: 25%" src="{{asset('storage/tanda_tangan/ttd 1.png')}}" alt=""></td>
-                <td><img style="width: 25%" src="{{asset('storage/tanda_tangan/ttd 1.png')}}" alt=""></td>
-            </tr>
-            <tr>
-                @foreach ($assignmentOrder->approvals()->get() as $item)
-                <td>{{$item->name}}</td>
-                @endforeach
-            </tr>
-        </table>
+        @endforeach
     </div>
 
 <P></P>

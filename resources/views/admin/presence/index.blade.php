@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="{{asset('template/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
 @endsection
 @section('content')
-<x-content-header name="Kegiatan Kerja Lapangan"/>
+<x-content-header name="Presensi Karyawan"/>
 <section class="content">
     <div class="container-fluid">
         @if ($errors->any())
@@ -26,8 +26,8 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col">
-                        <h3 class="card-title" style="margin-top: 0.3rem">Daftar project @isset($trashed) nonaktif | <a
-                                href="{{route('field_work_activity.index')}}">kembali</i></a> @endisset</h3>
+                        <h3 class="card-title" style="margin-top: 0.3rem">Daftar Presensi Karyawan @isset($trashed) nonaktif | <a
+                                href="{{route('presence.index')}}">kembali</i></a> @endisset</h3>
                     </div>
                     <div class="col">
                         <div class="card-tools float-right">
@@ -37,11 +37,11 @@
                                         <i class="fas fa-filter"></i>
                                     </button>
                                     @if (isset($filter))
-                                    <a href="{{route('field_work_activity.index')}}" class="btn btn-danger btn-sm"><i
+                                    <a href="{{route('presence.index')}}" class="btn btn-danger btn-sm"><i
                                             class="fas fa-undo"></i></a>
                                     @endif
                                     @if (!isset($trashed))
-                                    <a href="{{route('field_work_activity.create')}}" class="btn btn-success btn-sm">Tambah Data</a>
+                                    <a href="{{route('presence.print')}}" class="btn btn-success btn-sm">Cetak Laporan</a>
                                     @endif
                                 </div>
                             </div>
@@ -55,44 +55,44 @@
                     <thead>
                         <tr>
                             <th>No</th>
+                            <th>Nama</th>
+                            <th>Jam Hadir</th>
+                            <th>Jam Pulang</th>
+                            <th>Tanggal</th>
                             <th>Proyek</th>
-                            <th>PIC</th>
-                            <th>Tanggal Mulai</th>
-                            <th>Tanggal Selesai</th>
                             <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($fieldWorkActivities as $key => $fieldWorkActivity)
+                        @forelse ($presences as $key => $presence)
                         <tr>
-                            <td>{{$fieldWorkActivities->firstItem() + $key}}</td>
-                            <td>{{$fieldWorkActivity->project_name}}</td>
-                            <td>{{$fieldWorkActivity->pic_name}}</td>
-                            <td>{{$fieldWorkActivity->start_date->format('j F Y')}}</td></td>
-                            <td>{{$fieldWorkActivity->end_date->format('j F Y')}}</td></td>
+                            <td>{{$presences->firstItem() + $key}}</td>
+                            <td>{{$presence->employee->name}}</td>
+                            <td>{{$presence->start_time}}</td>
+                            <td>{{$presence->end_time}}</td>
+                            <td>{{$presence->date}}</td></td>
+                            <td>{{$presence->field_work_activity->project_name}}</td></td>
                             <td class="text-center">
                                 <div class="btn-group" role="group" aria-label="Basic example">
-                                    {{-- <a class="btn btn-info" href="{{route('field_work_activity.show'[$fieldWorkActivity->hash])}}"><i
+                                    {{-- <a class="btn btn-info" href="{{route('presence.show'[$presence->hash])}}"><i
                                         class="fa fa-eye"></i></a> --}}
                                     @isset($trashed)
                                     <form class="btn-group delete-form" role="group"
-                                        action="{{route('field_work_activity.restore',[$fieldWorkActivity->hash])}}" method="POST">
+                                        action="{{route('presence.restore',[$presence->hash])}}" method="POST">
                                         {{ csrf_field() }}
                                         @method('PUT')
-                                        <button class="btn btn-info restore-confirms" value="{{$fieldWorkActivity->name}}"
+                                        <button class="btn btn-info restore-confirms" value="{{$presence->name}}"
                                             type="submit" data-toggle="tooltip" title="Hapus Data"><i
                                                 class="fa fa-trash-restore"></i></button>
                                     </form>
                                     @else
-                                    <a class="btn btn-info" href="{{route('field_work_activity.show',$fieldWorkActivity->id)}}"
+                                    <a class="btn btn-info" href="{{route('presence.show',$presence->id)}}"
                                         data-toggle="tooltip" title="List Kontraktor"><i class="fa fa-list"></i></a>
-                                    <a class="btn btn-warning" href="{{route('field_work_activity.edit',$fieldWorkActivity)}}"
-                                        data-toggle="tooltip" title="Ubah Data"><i class="fa fa-pen"></i></a>
                                     <form class="btn-group delete-form" role="group"
-                                        action="{{route('field_work_activity.destroy',$fieldWorkActivity)}}" method="POST">
+                                        action="{{route('presence.destroy',$presence)}}" method="POST">
                                         {{ csrf_field() }}
                                         @method('DELETE')
-                                        <button class="btn btn-danger delete-confirms" value="{{$fieldWorkActivity->name}}"
+                                        <button class="btn btn-danger delete-confirms" value="{{$presence->name}}"
                                             type="submit" data-toggle="tooltip" title="Hapus Data"><i
                                                 class="fa fa-trash"></i></button>
                                     </form>
@@ -124,7 +124,7 @@
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
-                            <form action="{{route('field_work_activity.filter')}}" method="get">
+                            <form action="{{route('presence.filter')}}" method="get">
                                 <div class="modal-body">
                                     @isset($trashed)
                                     <input type="hidden" name="trashed" value="true">
@@ -155,11 +155,11 @@
             </div>
             <div class="card-footer">
                 <div class="float-right">
-                    {{$fieldWorkActivities->setPath(url()->current())->links('pagination::bootstrap-4')}}
+                    {{$presences->setPath(url()->current())->links('pagination::bootstrap-4')}}
                 </div>
                 {{-- <div class="float-left">
                     @if (!isset($trashed))
-                    <a href="{{route('field_work_activity.index.trashed')}}" class="btn btn-info">Tampilkan Project Nonaktif</a>
+                    <a href="{{route('presence.index.trashed')}}" class="btn btn-info">Tampilkan Project Nonaktif</a>
                     @endif
                 </div> --}}
             </div>
