@@ -54,7 +54,7 @@ class EmployeeController extends Controller
     public function create()
     {
         $roles = Role::select('id','name')->where('id','!=',1)->get();
-        return view('employee.create', compact('roles'));
+        return view('admin.employee.create', compact('roles'));
     }
 
     /**
