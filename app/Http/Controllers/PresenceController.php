@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\FieldWorkActivity;
 use App\Models\Presence;
 use Carbon\Carbon;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 
 class PresenceController extends Controller
 {
@@ -52,17 +54,21 @@ class PresenceController extends Controller
         //
     }
 
-    public function print()
+    public function print($id)
     {
-        $presences = Presence::with('employee')
+        $data = Presence::with('employee','field_work_activity')
+            ->where('field_work_activity_id',$id)
             ->orderBy('date')
-            ->get()
-            ->groupBy([function ($val) {
-                return Carbon::parse($val->date)->format('F');
-            },'employee.name',function ($val) {
-                return Carbon::parse($val->date)->format('d');
-            }])->toArray();
+            ->get();
+        $project_name = $data->first()->field_work_activity->project_name;
+        $presences = $data->groupBy([function ($val) {
+            return Carbon::parse($val->date)->format('F');
+        },'employee.name',function ($val) {
+            return Carbon::parse($val->date)->format('d');
+        }])->toArray();
         $dayInMonth = Carbon::now()->daysInMonth;
-        return view('print.report',compact('presences','dayInMonth'));
+        $pdf = Pdf::loadView('print.report', compact('presences','dayInMonth','project_name'));
+        return $pdf->download('rekap presensi karyawan.pdf');
+        return view('print.report',compact('presences','dayInMonth','project_name'));
     }
 }

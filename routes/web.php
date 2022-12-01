@@ -59,7 +59,7 @@ Route::get('bc', function () {
             //     })->toArray();
             // })
 
-    dd($data[]);
+    dd($data);
 });
 Auth::routes();
 
@@ -98,7 +98,7 @@ Route::group(['middleware' => ['auth'],'prefix'=>'admin'], function () {
     Route::get('presensi/{presence}/show', [PresenceController::class,'show'])->name('presence.show');
     Route::delete('presensi/{presence}', [PresenceController::class,'destroy'])->name('presence.destroy');
     Route::get('presensi/filter', [PresenceController::class,'filter'])->name('presence.filter');
-    Route::get('presensi/print',[PresenceController::class,'print'])->name('presence.print');
+    Route::get('presensi/print/{id}',[PresenceController::class,'print'])->name('presence.print');
 
 
     // Route::get('tes', function () {

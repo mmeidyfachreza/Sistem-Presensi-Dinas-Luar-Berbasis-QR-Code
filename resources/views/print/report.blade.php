@@ -9,19 +9,19 @@
         body{
             font-family: 'Times New Roman', Times, serif;
         }
-        table, th, td {
-  border: 1px solid black;
-  border-collapse: collapse;
-}
+        table#data , table#data thead tr th , table#data tbody tr td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
         #header{
             text-align: center;
         }
-        #content{
+        /* #content{
             padding-left: 2%;
             padding-right: 2%;
-        }
+        } */
         td{
-            padding-bottom: 10px;
+            text-align: center;
         }
         ul.no-bullets {
         list-style-type: none; /* Remove bullets */
@@ -38,12 +38,13 @@
 </head>
 <body>
     <div id="header">
-        <h3><u>Rekap Presensi Karyawan</u></h3>
+        <h2 style="margin: 0%"><u>Rekap Presensi Karyawan CV Thortech Asia Software</u></h3>
+        <h4 style="margin: 0%">Proyek : {{$project_name}}</h2>
     </div>
     <div id="content">
         @foreach ($presences as $month => $employees)
         <p><b>Bulan: {{$month}}</b></p>
-        <table style="width: 100%">
+        <table style="width: 100%" id="data">
             <thead>
                 <tr>
                     <th>Nama</th>
@@ -58,9 +59,9 @@
                     <td>{{$name}}</td>
                     @for ($i = 0; $i < $dayInMonth; $i++)
                     @if (isset($day[$i]))
-                    <td>{{$day[$i][0]['work_duration']}} Jam</td>
+                    <td style="background-color: #c2f0c2">{{$day[$i][0]['work_duration']}} Jam</td>
                     @else
-                    <td>-</td>
+                    <td>0 Jam</td>
                     @endif
                     @endfor
                 </tr>
@@ -93,6 +94,13 @@
             </tr> --}}
         </table>
         @endforeach
+        <br>
+        <table style="width: 100%" id="signature">
+            <tr>
+                <td style="width: 50%">&nbsp;</td>
+                <td>Staff Administrasi <br><br><br><br> Fefi</td>
+            </tr>
+        </table>
     </div>
 
 <P></P>
