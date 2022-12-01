@@ -63,6 +63,6 @@ class PresenceController extends Controller
                 return Carbon::parse($val->date)->format('d');
             }])->toArray();
         $dayInMonth = Carbon::now()->daysInMonth;
-        return view('print.assignment_order_print',compact('presences','dayInMonth'));
+        return view('print.report',compact('presences','dayInMonth'));
     }
 }
