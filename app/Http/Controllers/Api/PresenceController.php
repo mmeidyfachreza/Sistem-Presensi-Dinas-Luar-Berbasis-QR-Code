@@ -39,7 +39,6 @@ class PresenceController extends Controller
             // if (!$this->verificationDistance($request->lat,$request->long, $coordinate[0], $coordinate[1], $fieldWorkActivity->tolerance_distance)) {
             //     return response()->json(['message'=>'anda terlalu jauh dari lokasi presensi yang telah ditentukan'.$request->lat.', '.$request->long],400);
             // }
-
             if (Presence::havePresence($request->userId)) {
                 $presence = Presence::getPresence($request->userId);
                 $endTime = Carbon::now()->format('H:i:s');
